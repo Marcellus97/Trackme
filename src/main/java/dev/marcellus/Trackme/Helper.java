@@ -1,6 +1,8 @@
 package dev.marcellus.Trackme;
 
+import com.fasterxml.jackson.databind.JsonSerializable;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,8 +22,9 @@ public class Helper {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        JSONObject json = new JSONObject(response.body());
 
-        JSONPObject jsonpObject = new JSONPObject(response.body());
-        return null;
+        String status = json.get("status").toString();
+        return status;
     }
 }
